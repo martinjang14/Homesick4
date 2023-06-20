@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using TMPro;
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -64,6 +65,7 @@ public class EnemyMovement : MonoBehaviour
             Flip();
         else if (moveX < 0 && facingRight)
             Flip();
+
     }
 
     private void Flip()

@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerAttributes : MonoBehaviour
 {
     public Camera camera;
+    public GameObject HealthText;
+    public GameObject EnemiesLeft;
 
     public GameObject projectilePrefab;
 
@@ -24,7 +27,15 @@ public class PlayerAttributes : MonoBehaviour
     public float jumpForce = 5f;
     public int maxJumps = 2;
 
+    public int multiplier = 1;
+
     private int currentHealth;
+
+    private void Update()
+    {
+        HealthText.GetComponent<TextMeshProUGUI>().text = "Health: " + currentHealth;
+        EnemiesLeft.GetComponent<TextMeshProUGUI>().text = "Enemies Left: " + GameObject.FindGameObjectsWithTag("Enemy").Length;
+    }
 
     private void Awake()
     {

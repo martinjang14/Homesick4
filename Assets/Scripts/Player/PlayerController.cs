@@ -44,6 +44,15 @@ public class PlayerController : MonoBehaviour {
     private void Update()
     {
         addanims();
+
+        if(facingRight)
+        {
+            PA.multiplier = 1;
+        } else
+        {
+            PA.multiplier = -1;
+        }
+
         moveX = Input.GetAxis("Horizontal");
 
         // Sprinting

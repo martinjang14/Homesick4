@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class EnemyAttributes : MonoBehaviour
 {
+    public TextMeshProUGUI text;
+
     public float moveSpeed = 3f;
     public float jumpForce = 5f;
 
@@ -24,6 +27,11 @@ public class EnemyAttributes : MonoBehaviour
     private void Start()
     {
         CurrentHealth = maxHealth;
+    }
+
+    private void Update()
+    {
+        text.text = "Health: " + currentHealth;
     }
 
     public int CurrentHealth

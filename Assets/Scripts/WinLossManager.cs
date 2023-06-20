@@ -15,11 +15,11 @@ public class WinLossManager : MonoBehaviour
 
     public static void win()
     {
-        Debug.Log("damn bruh u winnnnn");
+        SceneManager.LoadScene("FinalCutscene");
     }
 
     public static void lose()
     {
-        Debug.Log("hehehhehehe u lost u stupid fukc");
+        SceneManager.LoadScene("Loss Screen");
     }
 }

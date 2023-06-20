@@ -121,7 +121,14 @@ public class PlayerAttack : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         GameObject projectile = Instantiate(projectilePrefab, transform);
-        projectile.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        if(PA.multiplier == 1)
+        {
+            projectile.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        } else
+        {
+            projectile.transform.rotation = Quaternion.AngleAxis(angle + 180, Vector3.forward);
+        }
+        
 
         Projectile proj = projectile.GetComponent<Projectile>();
         proj.damage = projectileDamage;
