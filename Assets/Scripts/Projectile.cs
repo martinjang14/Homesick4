@@ -33,6 +33,11 @@ public class Projectile : MonoBehaviour
             EnemyAttributes enem = collision.gameObject.GetComponent<EnemyAttributes>();
             enem.takeDamage(damage);
         }
+        else if (collision.gameObject.CompareTag("Boss"))
+        {
+            BossAttributes boss = collision.gameObject.GetComponent<BossAttributes>();
+            boss.takeDamage(damage);
+        }
 
         Destroy(this.gameObject);
     }

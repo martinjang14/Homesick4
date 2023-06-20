@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
+    public Animator anim;
     private EnemyAttributes EA;
 
     private float meleeRadius;
@@ -89,6 +90,7 @@ public class EnemyAttack : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(1 / meleeFrequency);
+            anim.SetTrigger("Melee");
 
             PlayerAttributes PA = player.GetComponent<PlayerAttributes>();
             PA.takeDamage(meleeDamage);

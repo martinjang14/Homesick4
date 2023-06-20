@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
-
+    public Animator anim;
     private PlayerAttributes PA;
 
     private float moveSpeed;
@@ -15,8 +15,13 @@ public class PlayerController : MonoBehaviour {
 
     public bool isJumping = false;
     public bool isSprinting = false;
+
+    private float speed;
+    private float moveX;
     
     private Rigidbody2D rb;
+
+    private bool facingRight = true;
 
     private void Start()
     {
@@ -29,9 +34,17 @@ public class PlayerController : MonoBehaviour {
         this.maxJumps = PA.maxJumps;
     }
 
+    private void addanims()
+    {
+        Debug.Log(Mathf.Abs(moveX * speed));
+        anim.SetFloat("runSpeed", Mathf.Abs(moveX * speed));
+        anim.SetBool("isJumping", isJumping);
+    }
+
     private void Update()
     {
-        float moveX = Input.GetAxis("Horizontal");
+        addanims();
+        moveX = Input.GetAxis("Horizontal");
 
         // Sprinting
         if (Input.GetKey(KeyCode.LeftShift))
@@ -44,13 +57,19 @@ public class PlayerController : MonoBehaviour {
         }
 
         // Horizontal movement
-        float speed = isSprinting ? moveSpeed * sprintSpeedMultiplier : moveSpeed;
+        speed = isSprinting ? moveSpeed * sprintSpeedMultiplier : moveSpeed;
         Vector2 movement = new Vector2(moveX * speed, rb.velocity.y);
         rb.velocity = movement;
+
+        if (moveX > 0 && !facingRight)
+            Flip();
+        else if (moveX < 0 && facingRight)
+            Flip();
 
         // Jumping
         if (Input.GetButtonDown("Jump"))
         {
+            Debug.Log(jumpForce);
             if (currentJumps++ < maxJumps && isJumping)
             {
                 rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
@@ -61,6 +80,14 @@ public class PlayerController : MonoBehaviour {
                 isJumping = true;
             }
         }
+    }
+
+    private void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

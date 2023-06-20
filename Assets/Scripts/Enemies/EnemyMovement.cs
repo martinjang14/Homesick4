@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class EnemyMovement : MonoBehaviour
 {
+    public Animator anim;
     private GameObject player;
     private float moveSpeed;
     private float jumpForce;
@@ -12,6 +13,9 @@ public class EnemyMovement : MonoBehaviour
     private Rigidbody2D rb;
     public bool isJumping = false;
     public bool isMovingTowardsPlayer = false;
+
+    private float moveX;
+    private bool facingRight = true;
 
     private void Start()
     {
@@ -24,8 +28,16 @@ public class EnemyMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+    private void setanims()
+    {
+        anim.SetBool("isJumping", isJumping);
+        anim.SetBool("isRunning", isMovingTowardsPlayer);
+    }
+
     private void Update()
     {
+        setanims();
+
         float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
 
         if (distanceToPlayer <= detectionRadius)
@@ -46,6 +58,20 @@ public class EnemyMovement : MonoBehaviour
             isMovingTowardsPlayer = false;
             rb.velocity = new Vector2(0, rb.velocity.y);
         }
+
+        moveX = (player.transform.position - transform.position).normalized.x;
+        if (moveX > 0 && !facingRight)
+            Flip();
+        else if (moveX < 0 && facingRight)
+            Flip();
+    }
+
+    private void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

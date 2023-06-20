@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
+    public Animator anim;
     private Camera camera;
 
     private GameObject projectilePrefab;
@@ -41,23 +42,32 @@ public class PlayerAttack : MonoBehaviour
         this.projectileCooldownTime = PA.projectileCooldownTime;
         this.projectileSpeed = PA.projectileSpeed;
     }
-
     void Update()
     {
         if(Input.GetButtonDown("Quick Melee"))
-        {
+        { 
             foreach (GameObject enem in enemiesWithinMeleeRange)
             {
                 EnemyAttributes enemyAttributes = enem.GetComponent<EnemyAttributes>();
+                BossAttributes bossAttributes = enem.GetComponent<BossAttributes>();
+
                 if (canMeleeAttack)
                 {
-                    MeleeAttack(enemyAttributes);
+                    anim.SetTrigger("melee");
+                    if (enemyAttributes)
+                    {
+                        MeleeAttack(enemyAttributes);
+                    }
+                    else if (bossAttributes)
+                    {
+                        MeleeAttack(bossAttributes);
+                    }
+                    
                 }
             }
         }
         if (Input.GetButtonDown("Projectile Fire"))
         {
-            Debug.Log("here");
             if(canProjectileAttack)
             {
                 ProjectileAttack();
@@ -76,7 +86,7 @@ public class PlayerAttack : MonoBehaviour
 
             foreach (Collider2D col in cols)
             {
-                if(col.gameObject.CompareTag("Enemy"))
+                if(col.gameObject.CompareTag("Enemy") || col.gameObject.CompareTag("Boss"))
                 {
                     enemiesWithinMeleeRange.Add(col.gameObject);
                 }
@@ -92,8 +102,18 @@ public class PlayerAttack : MonoBehaviour
         Invoke("ResetMeleeAttack", meleeCooldownTime);
     }
 
+    private void MeleeAttack(BossAttributes boss)
+    {
+        boss.takeDamage(meleeDamage);
+
+        canMeleeAttack = false;
+        Invoke("ResetMeleeAttack", meleeCooldownTime);
+    }
+
     private void ProjectileAttack()
     {
+        anim.SetTrigger("projectile");
+
         Vector3 pos = camera.ScreenToWorldPoint(Input.mousePosition);
         Debug.Log(pos);
 
