@@ -4,29 +4,42 @@ using UnityEngine;
 
 public class PlayerAttributes : MonoBehaviour
 {
-    // Character attributes
+    public Camera camera;
+
+    public GameObject projectilePrefab;
+
     public int maxHealth = 100;
-    public int attackDamage = 10;
+
+    public int meleeDamage = 10;
+    public int projectileDamage = 8;
+
+    public float projectileSpeed = 10;
+    public float projectileCooldownTime = 1;
+
+    public float meleeRange = 10f;
+    public float meleeCooldownTime = 0.2f; 
 
     public float moveSpeed = 5f;
     public float sprintSpeedMultiplier = 1.5f;
     public float jumpForce = 5f;
     public int maxJumps = 2;
 
-    // Current character state
     private int currentHealth;
 
-    // Public property to access the current health
+    private void Awake()
+    {
+        CurrentHealth = maxHealth;
+    }
+
     public int CurrentHealth
     {
         get { return currentHealth; }
         set { currentHealth = Mathf.Clamp(value, 0, maxHealth); }
     }
 
-    // Example usage of character attributes
     public void takeDamage(int damage)
     {
-        currentHealth -= damage;
-        Debug.Log("Character took " + damage + " damage. Current health: " + currentHealth);
+        CurrentHealth -= damage;
+        Debug.Log("Player took " + damage + " damage. Current health: " + currentHealth);
     }
 }

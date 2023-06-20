@@ -37,7 +37,6 @@ public class EnemyMovement : MonoBehaviour
 
             if (player.transform.position.y - transform.position.y > 1 && !isJumping)
             {
-                Debug.Log(player.transform.position.y + " " + transform.position.y);
                 rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
                 isJumping = true;
             }
@@ -55,5 +54,11 @@ public class EnemyMovement : MonoBehaviour
         {
             isJumping = false;
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
 }

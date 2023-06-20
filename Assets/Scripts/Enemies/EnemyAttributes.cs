@@ -11,16 +11,21 @@ public class EnemyAttributes : MonoBehaviour
     public float projectileRadius = 8f;
     public float meleeRadius = 1f;
 
-    public int meleeDamage;
-    public int projectileDamage;
+    public int meleeDamage = 10;
+    public int projectileDamage = 10;
 
     public GameObject player;
-    public float posCheckFrequency;
-    public float meleeFrequency;
-    public float projectileFrequency;
+    public float meleeFrequency = 1;
+    public float projectileFrequency = 0.5f;
 
     public int maxHealth = 100;
     private int currentHealth;
+
+    private void Start()
+    {
+        CurrentHealth = maxHealth;
+    }
+
     public int CurrentHealth
     {
         get { return currentHealth; }
@@ -30,5 +35,6 @@ public class EnemyAttributes : MonoBehaviour
     public void takeDamage(int damage)
     {
         CurrentHealth -= damage;
+        Debug.Log("Enemy took " + damage + " damage. Current health: " + currentHealth);
     }
 }

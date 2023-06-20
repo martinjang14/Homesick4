@@ -7,10 +7,12 @@ public class EnemyAttack : MonoBehaviour
     private EnemyAttributes EA;
 
     private float meleeRadius;
+    private int meleeDamage;
     private float projectileRadius;
+    private int projectileDamage;
     
     private GameObject player;
-    private float posCheckFrequency;
+    private float posCheckFrequency = 5;
     private float meleeFrequency;
     private float projectileFrequency;
 
@@ -24,10 +26,11 @@ public class EnemyAttack : MonoBehaviour
 
         this.meleeRadius = EA.meleeRadius;
         this.projectileRadius = EA.projectileRadius;
-        this.posCheckFrequency = EA.posCheckFrequency;
         this.meleeFrequency = EA.meleeFrequency;
         this.projectileFrequency = EA.projectileFrequency;
         this.player = EA.player;
+        this.meleeDamage = EA.meleeDamage;
+        this.projectileDamage = EA.projectileDamage;
 
         StartCoroutine("CheckingForPlayer");
     }
@@ -87,7 +90,10 @@ public class EnemyAttack : MonoBehaviour
         {
             yield return new WaitForSeconds(1 / meleeFrequency);
 
-            Debug.Log("Melee Attack with Damage of " + EA.meleeDamage);
+            PlayerAttributes PA = player.GetComponent<PlayerAttributes>();
+            PA.takeDamage(meleeDamage);
+
+            Debug.Log("Enemy Melee Attack. Damage: " + meleeDamage);
         }
     }
 
@@ -97,7 +103,7 @@ public class EnemyAttack : MonoBehaviour
         {
             yield return new WaitForSeconds(1 / projectileFrequency);
 
-            Debug.Log("Projectile Attack with Damage of " + EA.projectileDamage);
+            Debug.Log("Enemy Projectile Attack");
         }
     }
 
@@ -105,5 +111,7 @@ public class EnemyAttack : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, projectileRadius);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, meleeRadius);
     }
 }

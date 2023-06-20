@@ -5,7 +5,28 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Level1.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/Bossfight.unity
+    guid: 3df01d54bb7b710468f1971bba454cd5
+  - enabled: 1
+    path: Assets/Scenes/FinalCutscene.unity
+    guid: 3dc7678b91c50bd499606f3315dcc5b3
+  - enabled: 1
+    path: Assets/Scenes/IntroCutscene.unity
+    guid: 2a5355152b43eb94c8f651115c16d07d
+  - enabled: 1
+    path: Assets/Scenes/Level2.unity
+    guid: f5d727daec7827c47be7a527d45f1ff5
+  - enabled: 1
+    path: Assets/Scenes/Loss Screen.unity
+    guid: b5eee99091cd88240a6e277e7ac65aa8
+  - enabled: 1
+    path: Assets/Scenes/Titlescreen.unity
+    guid: df673eb609f7c58498d3986ba9c84bcc
+  - enabled: 1
+    path: Assets/Scenes/TransitionCutscene.unity
+    guid: 116b9db0335ab89458933e414224871b
   m_configObjects: {}

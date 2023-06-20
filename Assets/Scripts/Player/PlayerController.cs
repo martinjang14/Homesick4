@@ -8,12 +8,14 @@ public class PlayerController : MonoBehaviour {
 
     private float moveSpeed;
     private float sprintSpeedMultiplier;
+
     private float jumpForce;
     private int maxJumps;
     private int currentJumps = 0;
+
     public bool isJumping = false;
-    private bool isSprinting = false;
-    private float speed;
+    public bool isSprinting = false;
+    
     private Rigidbody2D rb;
 
     private void Start()
@@ -22,7 +24,7 @@ public class PlayerController : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
 
         this.moveSpeed = PA.moveSpeed;
-        this.sprintSpeedMultiplier = PA.moveSpeed;
+        this.sprintSpeedMultiplier = PA.sprintSpeedMultiplier;
         this.jumpForce = PA.jumpForce;
         this.maxJumps = PA.maxJumps;
     }
@@ -42,7 +44,7 @@ public class PlayerController : MonoBehaviour {
         }
 
         // Horizontal movement
-        speed = isSprinting ? moveSpeed * sprintSpeedMultiplier : moveSpeed;
+        float speed = isSprinting ? moveSpeed * sprintSpeedMultiplier : moveSpeed;
         Vector2 movement = new Vector2(moveX * speed, rb.velocity.y);
         rb.velocity = movement;
 
